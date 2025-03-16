@@ -13,6 +13,24 @@
   .bg-secondary {
     background-color: #FB3754; 
   }
+
+  @media (max-width: 1370px) {
+    .margin-right2-2xl {
+      margin-right: 6px;
+    }
+  }
+
+  @media (max-width: 1329px) {
+    .margin-right1-2xl {
+      margin-right: 6px;
+    }
+  }
+
+  @media (max-width: 1287px) {
+    .margin-right12-2xl {
+      margin-right: 2px !important;
+    }
+  }
 }
 
 html, body, #root {
