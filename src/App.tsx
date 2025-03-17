@@ -11,10 +11,10 @@ import Navbar from "./components/navbar";
 
 const App: React.FC = () => {
   return (
-    <div id="container" className="w-full h-full bg-primary">
+    <div id="container" className="flex flex-col bg-primary">
       <Router>
         <Navbar />
-        <div id="pages" className="flex-grow mt-20">
+        <div id="pages">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/ads" element={<Ads />} />
@@ -25,7 +25,7 @@ const App: React.FC = () => {
             <Route path="/mentions" element={<Mentions />} />
           </Routes>
         </div>
-        <footer className="bg-secondary">
+        <footer className="bg-secondary z-1">
           <div className="flex flex-row">
             <div className="flex flex-col justify-start ml-8 md:ml-24 md:p-8">
               <div className="text-xl font-medium justify-center racing-sans-one-regular text-white">

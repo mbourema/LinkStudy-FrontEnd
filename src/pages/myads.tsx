@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Test } from "../components/test";
 
 export default function MyAds() {
     useEffect(() => {
@@ -7,7 +8,7 @@ export default function MyAds() {
 
     return (
         <div>
-            
+           <Test /> 
         </div>
     );
 }

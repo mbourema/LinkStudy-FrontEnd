@@ -4,9 +4,9 @@ import { Menu, X } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  
   return (
-    <nav className="bg-secondary fixed w-full top-0 z-50">
+    <nav className={`bg-secondary w-full top-0 ${isOpen ? "fixed z-10" : "z-0"}`}>
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div className="flex items-center">
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
         {/* Bouton Burger (visible uniquement en mobile) */}
         <button
-          className="xl:hidden text-white focus:outline-none relative z-10"
+          className="xl:hidden text-white focus:outline-none relative"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={30} /> : <Menu size={30} />}
@@ -46,8 +46,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Menu Mobile */}
-      <div
-        className={`absolute top-full left-0 bg-secondary bg-opacity-95 flex flex-col items-center space-y-6 py-10 px-6 text-2xl text-white racing-sans-one-regular transition-transform ${
+      <div id="menu_mobile" className={`absolute top-full left-0 bg-secondary bg-opacity-95 flex flex-col items-center space-y-6 py-10 px-6 text-2xl text-white racing-sans-one-regular transition-transform ${
           isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         style={{
