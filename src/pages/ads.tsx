@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import FilterButtons from "../components/adsfilters";
+import Button from "../components/button";
 
 export default function Ads() {
     useEffect(() => {
@@ -9,8 +10,9 @@ export default function Ads() {
     }, []);
 
     return (
-        <div>
+        <div className="flex flex-col gap-y-10 lg:items-center">
             <FilterButtons />
+            <Button text="Filter" color="bg-secondary"/>
         </div>
     );
 }

@@ -33,12 +33,12 @@ const FilterButtons: React.FC = () => {
     };
 
     return (
-        <div className="container relative z-5 flex flex-col my-auto mt-10 h-1/2 ml-0 justify-between ml-5 lg:mx-auto lg:w-1/2 lg:flex-row">
+        <div className="container relative z-5 flex flex-col my-auto mt-10 h-1/2 justify-between ml-5 lg:mx-auto lg:w-1/2 lg:flex-row">
             {/* Champ de sélection de la matière */}
             <form>
                 <label htmlFor="field" className="text-sm text-black font-semibold mb-2">Choose a field</label>
                 <select 
-                className="bg-gray-50 border text-black text-sm rounded-lg block w-30 p-1.5">
+                className="bg-gray-50 border text-black text-sm rounded-lg block w-30 p-1.5 shadow-lg">
                     <option defaultValue="Choose a filed">Field</option>
                     <option value="Informatics">Informatics</option>
                     <option value="Biology">Biology</option>
@@ -59,7 +59,7 @@ const FilterButtons: React.FC = () => {
                     onChange={(event) => {
                         handleNumberChange(event);
                     }}                    
-                    className="bg-gray-50 border text-black text-sm rounded-lg block w-35 p-1.5"
+                    className="bg-gray-50 border text-black text-sm rounded-lg block w-35 p-1.5 shadow-lg"
                     placeholder="Choose number"
                 />
             </form>
@@ -75,7 +75,7 @@ const FilterButtons: React.FC = () => {
                     onChange={(event) => {
                         handleKmChange(event);
                     }}                    
-                    className="bg-gray-50 border text-black text-sm rounded-lg block w-20 p-1.5"
+                    className="bg-gray-50 border text-black text-sm rounded-lg block w-20 p-1.5 shadow-lg"
                     placeholder="Km"
                 />
             </form>
@@ -88,7 +88,7 @@ const FilterButtons: React.FC = () => {
                     type="date"
                     value={date}
                     onChange={handleDateChange}                   
-                    className= "bg-gray-50 border text-black text-sm rounded-lg block w-30 p-1.5"
+                    className= "bg-gray-50 border text-black text-sm rounded-lg block w-30 p-1.5 shadow-lg"
                 />
             </form>
         </div>
