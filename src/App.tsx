@@ -28,19 +28,19 @@ const App: React.FC = () => {
         <footer className="bg-secondary z-1">
           <div className="flex flex-row">
             <div className="flex flex-col justify-start ml-8 md:ml-24 md:p-8">
-              <div className="text-xl font-medium justify-center racing-sans-one-regular text-white">
+              <div className="text-xl font-medium justify-center racing-sans-one-regular text-white text-footer">
                 Nous contacter :
               </div>
-              <a href="mailto:spaacetree@gmail.com" className="text-xl font-medium text-white hover:underline mt-4">
+              <a href="mailto:spaacetree@gmail.com" className="text-xl font-medium text-white hover:underline mt-4 text-footer">
               spaacetree@gmail.com
               </a>
             </div>
             <div className="flex-grow"></div>
             <div className="flex flex-col justify-end mr-8 md:mr-24 md:p-8">
-              <div className="text-xl font-medium justify-center racing-sans-one-regular text-white">
+              <div className="text-xl font-medium justify-center racing-sans-one-regular text-white text-footer">
                 Mentions légales :
               </div>
-              <Link className="text-xl font-medium text-white hover:underline mt-4" to="/mentions">
+              <Link className="text-xl font-medium text-white hover:underline mt-4 text-footer" to="/mentions">
               Cliquez ici
               </Link>
             </div>

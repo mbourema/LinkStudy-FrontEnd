@@ -7,7 +7,8 @@ export default function Connexion() {
     }, []);
 
     return (
-        <div className="bg-secondary flex flex-col justify-between items-center mt-[50vh] transform -translate-y-1/2 w-100 mx-auto rounded-xl shadow-lg">
+        <div className="bg-secondary flex flex-col gap-y-5 items-center mt-[50vh] transform -translate-y-1/2 w-auto max-w-100 mx-auto rounded-xl shadow-lg">
+          <p className="text-yellow-500 text-4xl font-medium racing-sans-one-regular">Connexion</p>
           <form>
             <label htmlFor="email" className="text-sm text-black font-semibold mb-2">Email</label>
             <input
@@ -26,8 +27,8 @@ export default function Connexion() {
                     placeholder="Enter your password"
                 />
           </form>
-          <div className="mt-2 mb-2">
-          <Button text="Connexion" color="bg-yellow-600" />
+          <div className="mb-2">
+          <Button text="Connexion" color="bg-yellow-500" />
           </div>
         </div>
     );

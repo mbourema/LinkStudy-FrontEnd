@@ -31,6 +31,22 @@
       margin-right: 2px !important;
     }
   }
+
+  @media (max-width: 585px){
+    nav div div a{
+      display: none;
+    }
+  }
+
+  @media (max-width: 472px){
+    nav div div img{
+      display: none;
+    }
+
+    .text-footer{
+      font-size: 13px !important;
+    }
+  }
 }
 
 html, body, #root {

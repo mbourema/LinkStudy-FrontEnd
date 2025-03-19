@@ -7,7 +7,8 @@ export default function Inscription() {
     }, []);
 
     return (
-      <div className="bg-secondary flex flex-col justify-between items-center mt-[50vh] transform -translate-y-1/2 w-100 mx-auto rounded-xl shadow-lg">
+      <div className="bg-secondary flex flex-col gap-y-5 items-center mt-[50vh] transform -translate-y-1/2 w-auto max-w-100 mx-auto rounded-xl shadow-lg">
+      <p className="text-yellow-500 text-4xl font-medium racing-sans-one-regular">Inscription</p>
       <form>
         <label htmlFor="name" className="text-sm text-black font-semibold mb-2">Name</label>
         <input
@@ -62,7 +63,7 @@ export default function Inscription() {
               placeholder="Enter your date of birth"
           />
       </form>
-      <div className="mt-2 mb-2">
+      <div className="mb-2">
       <Button text="Inscription" color="bg-yellow-600" />
       </div>
     </div>
