@@ -12,7 +12,7 @@ export default function Ads() {
     return (
         <div className="flex flex-col gap-y-10 lg:items-center">
             <FilterButtons />
-            <Button text="Filter" color="bg-secondary"/>
+            <Button text="Filter" color="bg-yellow-500"/>
         </div>
     );
 }
