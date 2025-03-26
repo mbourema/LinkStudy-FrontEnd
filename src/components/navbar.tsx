@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   
   return (
-    <nav className={`bg-secondary w-full top-0 ${isOpen ? "fixed z-10" : "z-0"}`}>
+    <nav className={`bg-secondary fixed w-full h-20 top-0 ${isOpen ? "fixed z-10" : "z-0"}`}>
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div className="flex items-center">

@@ -6,127 +6,148 @@ export default function Inscription() {
     document.title = "Inscription - LinkStudy";
   }, []);
 
-  // États pour stocker les valeurs du formulaire
+  // État pour stocker les valeurs du formulaire
   const [formData, setFormData] = useState({
     name: "",
     forname: "",
     email: "",
     password: "",
+    confirmPassword: "",
     pseudo: "",
     date_of_birth: ""
   });
 
-  // État pour gérer les erreurs
-  const [error, setError] = useState<string | null>(null);
+  // État pour gérer les erreurs par champ
+  // Error est une objet dont les clés sont des chaînes de caractère et les valuers aussi et il va contenir pour chaque champs du formulaire une valeur spécifique
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   // Fonction pour mettre à jour les données du formulaire
+  // ChangeEvent représente un événement de changement déclenché lorsque l'utilisateur interagit avec un champ de formulaire
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Les propriétés name et value de e.target sont extraites
     const { name, value } = e.target;
+
+    // ...prev crée une copie de l'objet prev pour garantir qu'on ne perd pas les autres champs déjà remplis lors de la mise a jour d'un autre champ
     setFormData((prev) => ({
       ...prev,
+      // Mettre à jour uniquement le champ modifié, sans toucher aux autres
       [name]: value
     }));
+
+    // Supprime l'erreur associée au champ s'il est corrigé
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
+  };
+
+  // Fonctions de validation
+  const validateName = (value: string) => value.trim() !== "";
+  const validateForname = (value: string) => value.trim() !== "";
+
+  const validateEmail = (value: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+  const validatePassword = (value: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(
+      value.trim()
+    );
+
+  const validateDateOfBirth = (value: string) => {
+    const birthDate = new Date(value);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    return age >= 16; // L'utilisateur doit avoir au moins 16 ans
+  };
+
+  // Vérification complète du formulaire
+  const validateForm = () => {
+    let newErrors: { [key: string]: string } = {};
+
+    if (!validateName(formData.name)) newErrors.name = "Please enter a name";
+    if (!validateForname(formData.forname))
+      newErrors.forname = "Please enter a forname";
+    if (!validateEmail(formData.email)) newErrors.email = "Please enter a valid email (ex: test@test.com)";
+    if (!validatePassword(formData.password))
+      newErrors.password =
+        "The password must contain 8 characters, a capital letter, a number and a symbol";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "The passwords do not match";
+    if (!formData.pseudo.trim()) newErrors.pseudo = "Username is required";
+    if (!formData.date_of_birth)
+      newErrors.date_of_birth = "Date of birth is required";
+    else if (!validateDateOfBirth(formData.date_of_birth))
+      newErrors.date_of_birth = "You must be at least 16 years old";
+
+    setErrors(newErrors);
+    // Object.keys retoure toutes les clés de l'objet, si le tableau retourné est vide ça veut dire qu'il n'y a pas d'erreur
+    return Object.keys(newErrors).length === 0;
   };
 
   // Fonction pour envoyer le formulaire
+  // React.FormEvent représente l'évenement déclanché lorsque l'utilisateur intéragit avec le formulaire
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Empêche le rechargement de la page par défaut
+
+    if (!validateForm()) return;
 
     try {
       const response = await fetch("http://localhost:5000/users", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
 
-      if (!response.ok) {
+      if (!response.ok){
         throw new Error("Échec de l'inscription.");
       }
 
       alert("Utilisateur créé avec succès !");
-    } catch (err) {
-      setError("Erreur lors de l'ajout de l'utilisateur.");
+    } catch (error) {
+      alert("Erreur lors de l'ajout de l'utilisateur !");
     }
   };
 
   return (
-    <div className="bg-secondary flex flex-col gap-y-5 items-center mt-[50vh] transform -translate-y-1/2 w-auto max-w-100 mx-auto rounded-xl shadow-lg">
-      <p className="text-yellow-500 text-4xl font-medium racing-sans-one-regular">Inscription</p>
-      
-      {/* Formulaire avec une seule balise form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
-        <label htmlFor="name" className="text-sm text-black font-semibold mb-2">Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          placeholder="Enter your name"
-          value={formData.name}
-          onChange={handleInputChange}
-        />
+    <div className="bg-secondary flex flex-col gap-y-5 items-center mt-[50vh] transform -translate-y-1/2 w-auto max-w-lg mx-auto rounded-xl shadow-lg p-5">
+      <p className="text-yellow-500 text-4xl font-medium racing-sans-one-regular">
+        Inscription
+      </p>
 
-        <label htmlFor="forname" className="text-sm text-black font-semibold mb-2">Forname</label>
-        <input
-          id="forname"
-          name="forname"
-          type="text"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          placeholder="Enter your forname"
-          value={formData.forname}
-          onChange={handleInputChange}
-        />
+      <form onSubmit={handleSubmit} className="flex flex-col w-full">
+        {[
+          { name: "name", label: "Name", type: "text" },
+          { name: "forname", label: "Forname", type: "text" },
+          { name: "email", label: "Email", type: "email" },
+          { name: "password", label: "Password", type: "password" },
+          { name: "confirmPassword", label: "Confirm your password", type: "password" },
+          { name: "pseudo", label: "Pseudo", type: "text" },
+          { name: "date_of_birth", label: "Date of birth", type: "date" }
+        ].map(({ name, label, type }) => (
+          <div key={name} className="mb-3">
+            <label htmlFor={name} className="text-sm text-black font-semibold">
+              {label}
+            </label>
+            <input
+              id={name}
+              name={name}
+              type={type}
+              className={`bg-gray-50 border text-black text-sm rounded-lg block w-full p-1.5 ${
+                errors[name] ? "border-yellow-500 border-2" : "border-black border-2"
+              }`}
+              placeholder={`Entrez votre ${label.toLowerCase()}`}
+              value={formData[name as keyof typeof formData]}
+              onChange={handleInputChange}
+            />
+            {errors[name] && <p className="text-yellow-500 text-sm font-semibold">{errors[name]}</p>}
+          </div>
+        ))}
 
-        <label htmlFor="email" className="text-sm text-black font-semibold mb-2">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-
-        <label htmlFor="password" className="text-sm text-black font-semibold mb-2">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-
-        <label htmlFor="pseudo" className="text-sm text-black font-semibold mb-2">Pseudo</label>
-        <input
-          id="pseudo"
-          name="pseudo"
-          type="text"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          placeholder="Enter your pseudo"
-          value={formData.pseudo}
-          onChange={handleInputChange}
-        />
-
-        <label htmlFor="date_of_birth" className="text-sm text-black font-semibold mb-2">Date of Birth</label>
-        <input
-          id="date_of_birth"
-          name="date_of_birth"
-          type="date"
-          className="bg-gray-50 border text-black text-sm rounded-lg block w-70 p-1.5"
-          value={formData.date_of_birth}
-          onChange={handleInputChange}
-        />
-
-        <div className="mb-2">
+        <div className="mx-auto mt-3">
           <Button text="Inscription" color="bg-yellow-500" />
         </div>
-
-        {error && <p className="text-red-500">{error}</p>}
       </form>
     </div>
   );
