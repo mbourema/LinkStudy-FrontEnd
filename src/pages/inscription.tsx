@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "../components/button";
+import Swal from "sweetalert2";
 
 export default function Inscription() {
   useEffect(() => {
@@ -18,19 +19,13 @@ export default function Inscription() {
   });
 
   // État pour gérer les erreurs par champ
-  // Error est une objet dont les clés sont des chaînes de caractère et les valuers aussi et il va contenir pour chaque champs du formulaire une valeur spécifique
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   // Fonction pour mettre à jour les données du formulaire
-  // ChangeEvent représente un événement de changement déclenché lorsque l'utilisateur interagit avec un champ de formulaire
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Les propriétés name et value de e.target sont extraites
     const { name, value } = e.target;
-
-    // ...prev crée une copie de l'objet prev pour garantir qu'on ne perd pas les autres champs déjà remplis lors de la mise a jour d'un autre champ
     setFormData((prev) => ({
       ...prev,
-      // Mettre à jour uniquement le champ modifié, sans toucher aux autres
       [name]: value
     }));
 
@@ -45,15 +40,32 @@ export default function Inscription() {
 
   // Fonctions de validation
   const validateName = (value: string) => value.trim() !== "";
+
   const validateForname = (value: string) => value.trim() !== "";
 
   const validateEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
+  const validateEmailUnique = async (value: string): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:5000/users", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok){
+        throw new Error("Erreur lors de la vérification de l'email");
+      }
+      const users = await response.json();
+      const emailExists = users.some((user: any) => user.email === value);
+      return !emailExists;
+    } catch (error) {
+      console.error("Erreur lors de la validation de l'email : ", error);
+      return false;
+    }
+  };
+
   const validatePassword = (value: string) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(
-      value.trim()
-    );
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(value.trim());
 
   const validateDateOfBirth = (value: string) => {
     const birthDate = new Date(value);
@@ -62,36 +74,63 @@ export default function Inscription() {
     return age >= 16; // L'utilisateur doit avoir au moins 16 ans
   };
 
-  // Vérification complète du formulaire
-  const validateForm = () => {
+  // Validation du pseudo
+  const validatePseudo = async (value: string): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:5000/users", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error("Erreur lors de la vérification du pseudo.");
+      }
+      const users = await response.json();
+      const pseudoExists = users.some((user: any) => user.pseudo === value);
+      return !pseudoExists;
+    } catch (error) {
+      console.error("Erreur de validation du pseudo:", error);
+      return false;
+    }
+  };
+
+  // Validation complète du formulaire
+  const validateForm = async () => {
     let newErrors: { [key: string]: string } = {};
 
     if (!validateName(formData.name)) newErrors.name = "Please enter a name";
-    if (!validateForname(formData.forname))
-      newErrors.forname = "Please enter a forname";
-    if (!validateEmail(formData.email)) newErrors.email = "Please enter a valid email (ex: test@test.com)";
-    if (!validatePassword(formData.password))
-      newErrors.password =
-        "The password must contain 8 characters, a capital letter, a number and a symbol";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "The passwords do not match";
-    if (!formData.pseudo.trim()) newErrors.pseudo = "Username is required";
-    if (!formData.date_of_birth)
+    if (!validateForname(formData.forname)) newErrors.forname = "Please enter a forname";
+    if (!validateEmail(formData.email)){
+      newErrors.email = "Please enter a valid email (ex: test@test.com)";
+    } else {
+      const isEmailValid = await validateEmailUnique(formData.email);
+      if (!isEmailValid) newErrors.email = "This email already exists";
+    }
+    if (!validateEmailUnique(formData.email)) newErrors.email = "This email already exists";
+    if (!validatePassword(formData.password)) newErrors.password =
+      "The password must contain 8 characters, a capital letter, a number and a symbol";
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "The passwords do not match";
+    if (!formData.pseudo.trim()) {
+      newErrors.pseudo = "Username is required";
+    } else {
+      const isPseudoValid = await validatePseudo(formData.pseudo);
+      if (!isPseudoValid) newErrors.pseudo = "This pseudo already exists";
+    }
+    if (!formData.date_of_birth) {
       newErrors.date_of_birth = "Date of birth is required";
-    else if (!validateDateOfBirth(formData.date_of_birth))
+    } else if (!validateDateOfBirth(formData.date_of_birth)) {
       newErrors.date_of_birth = "You must be at least 16 years old";
+    }
 
     setErrors(newErrors);
-    // Object.keys retoure toutes les clés de l'objet, si le tableau retourné est vide ça veut dire qu'il n'y a pas d'erreur
     return Object.keys(newErrors).length === 0;
   };
 
   // Fonction pour envoyer le formulaire
-  // React.FormEvent représente l'évenement déclanché lorsque l'utilisateur intéragit avec le formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Empêche le rechargement de la page par défaut
 
-    if (!validateForm()) return;
+    const isValid = await validateForm(); // Attendre la validation avant de continuer
+    if (!isValid) return;
 
     try {
       const response = await fetch("http://localhost:5000/users", {
@@ -100,15 +139,31 @@ export default function Inscription() {
         body: JSON.stringify(formData)
       });
 
-      if (!response.ok){
+      if (!response.ok) {
         throw new Error("Échec de l'inscription.");
       }
 
-      alert("Utilisateur créé avec succès !");
+      Swal.fire({
+        text: `Congrats ${formData.forname}, you are now subscribed and you can connect yourself`,
+        icon: "success",
+        position: "center",
+        showConfirmButton: false,
+        timer: 3000,
+      }).then(() => {                   
+        document.location.href = "/connexion";
+      });
+
     } catch (error) {
-      alert("Erreur lors de l'ajout de l'utilisateur !");
+      Swal.fire({
+        text: "Error during the inscription process",
+        icon: "error",
+        position: "center",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false
+      });
     }
-  };
+  }
 
   return (
     <div className="bg-secondary flex flex-col gap-y-5 items-center mt-[50vh] transform -translate-y-1/2 w-auto max-w-lg mx-auto rounded-xl shadow-lg p-5">
