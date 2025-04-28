@@ -48,7 +48,7 @@ export default function Inscription() {
 
   const validateEmailUnique = async (value: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -77,7 +77,7 @@ export default function Inscription() {
   // Validation du pseudo
   const validatePseudo = async (value: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       });
@@ -133,7 +133,7 @@ export default function Inscription() {
     if (!isValid) return;
 
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
