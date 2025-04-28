@@ -25,9 +25,9 @@ const App: React.FC = () => {
             <Route path="/mentions" element={<Mentions />} />
           </Routes>
         </div>
-        <footer className="bg-secondary z-1">
-          <div className="flex flex-row">
-            <div className="flex flex-col justify-start ml-8 md:ml-24 md:p-8">
+        <footer className="bg-secondary">
+          <div className="flex flex-row h-20">
+            <div className="flex flex-col justify-start ml-8 md:ml-24">
               <div className="text-xl font-medium justify-center racing-sans-one-regular text-white text-footer">
                 Nous contacter :
               </div>
@@ -36,7 +36,7 @@ const App: React.FC = () => {
               </a>
             </div>
             <div className="flex-grow"></div>
-            <div className="flex flex-col justify-end mr-8 md:mr-24 md:p-8">
+            <div className="flex flex-col justify-end mr-8 md:mr-24">
               <div className="text-xl font-medium justify-center racing-sans-one-regular text-white text-footer">
                 Mentions légales :
               </div>

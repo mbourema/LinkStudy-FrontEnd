@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   
   return (
-    <nav className={`bg-secondary fixed w-full h-20 top-0 ${isOpen ? "fixed z-10 pointer-events-auto" : "z-1 pointer-events-none"}`}>
+    <nav className={`bg-secondary fixed w-full h-20 top-0 ${isOpen ? "z-10 pointer-events-auto" : "z-1 pointer-events-none"}`}>
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div className="flex items-center">
@@ -46,8 +46,8 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Menu Mobile */}
-      <div id="menu_mobile" className={`absolute top-full left-0 bg-secondary bg-opacity-95 flex flex-col items-center space-y-6 py-10 px-6 text-2xl text-white racing-sans-one-regular transition-transform ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+      <div className={`absolute top-full left-0 bg-secondary bg-opacity-95 flex flex-col items-center space-y-6 py-10 px-6 text-2xl text-white racing-sans-one-regular transition-transform ${
+          isOpen ? "opacity-100" : "opacity-0"
         }`}
         style={{
             top: "100%",
