@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -31,11 +30,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
-    "npm-force-resolutions": "^0.0.10",
     "typescript": "^5.8.2",
     "vite": "^6.3.3"
-  },
-  "resolutions": {
-    "@rollup/rollup-linux-x64-gnu": "npm:@rollup/wasm-node"
   }
 }
