@@ -32,5 +32,8 @@
     "globals": "^15.15.0",
     "typescript": "^5.8.2",
     "vite": "^6.3.3"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   }
 }
