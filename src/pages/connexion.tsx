@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/button";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Connexion() {
@@ -37,6 +38,7 @@ export default function Connexion() {
     // Fonction pour envoyer le formulaire
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault(); // Empêche le rechargement de la page par défaut
+      const navigate = useNavigate();
       let newErrors: { [key: string]: string } = {};
       try {
             const response = await fetch("https://linkstudy-backend-production.up.railway.app/users/login", {
@@ -56,7 +58,7 @@ export default function Connexion() {
               showConfirmButton: false,
               timer: 3000,
             }).then(() => {                   
-              document.location.href = "/";
+              navigate("/");
             });
       
           } catch (error) {

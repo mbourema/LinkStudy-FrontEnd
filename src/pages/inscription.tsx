@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/button";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Inscription() {
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function Inscription() {
   // Fonction pour envoyer le formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Empêche le rechargement de la page par défaut
+    const navigate = useNavigate();
 
     const isValid = await validateForm(); // Attendre la validation avant de continuer
     if (!isValid) return;
@@ -150,7 +152,7 @@ export default function Inscription() {
         showConfirmButton: false,
         timer: 3000,
       }).then(() => {                   
-        document.location.href = "/connexion";
+        navigate("/connexion");
       });
 
     } catch (error) {
