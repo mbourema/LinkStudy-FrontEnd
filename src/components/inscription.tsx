@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import Button from "../components/button";
+import Button from "./button";
 import Swal from "sweetalert2";
 
 export default function Inscription() {
-  useEffect(() => {
-    document.title = "Inscription - LinkStudy";
-  }, []);
-
   // État pour stocker les valeurs du formulaire
   const [formData, setFormData] = useState({
     name: "",
@@ -48,7 +44,7 @@ export default function Inscription() {
 
   const validateEmailUnique = async (value: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -77,7 +73,7 @@ export default function Inscription() {
   // Validation du pseudo
   const validatePseudo = async (value: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       });
@@ -133,7 +129,7 @@ export default function Inscription() {
     if (!isValid) return;
 
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://linkstudy-backend-production.up.railway.app/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -150,7 +146,7 @@ export default function Inscription() {
         showConfirmButton: false,
         timer: 3000,
       }).then(() => {                   
-        document.location.href = "/connexion";
+        window.location.href = "/connexion";
       });
 
     } catch (error) {
@@ -207,4 +203,3 @@ export default function Inscription() {
     </div>
   );
 }
-

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navbar: React.FC = () => {
@@ -10,18 +9,18 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div className="flex items-center">
-          <img className="size-12 w-auto" src="../images/icon.png" alt="icone_LinkStudy" />
-          <Link className="text-xl font-medium racing-sans-one-regular text-black ml-2 pointer-events-auto" to="/">LinkStudy</Link>
+          <img className="size-12 w-auto" src="/images/icon.png" alt="icone_LinkStudy" />
+          <a className="text-xl font-medium racing-sans-one-regular text-black ml-2 pointer-events-auto" href="/">LinkStudy</a>
         </div>
 
         {/* Menu Desktop */}
         <div className="hidden xl:flex space-x-8 xl:space-x-16 text-xl font-medium racing-sans-one-regular text-white pointer-events-auto">
-          <Link className="hover:text-gray-300" to="/">Home</Link>
-          <Link className="hover:text-gray-300" to="/ads">Ads</Link>
-          <Link className="hover:text-gray-300" to="/myads">My ads</Link>
-          <Link className="hover:text-gray-300" to="/profile">Profil</Link>
-          <Link className="hover:text-gray-300" to="/connexion">Connexion</Link>
-          <Link className="hover:text-gray-300" to="/inscription">Inscription</Link>
+          <a className="hover:text-gray-300" href="/">Home</a>
+          <a className="hover:text-gray-300" href="/ads">Ads</a>
+          <a className="hover:text-gray-300" href="/myads">My ads</a>
+          <a className="hover:text-gray-300" href="/profile">Profil</a>
+          <a className="hover:text-gray-300" href="/connexion">Connexion</a>
+          <a className="hover:text-gray-300" href="/inscription">Inscription</a>
         </div>
 
         {/* Barre de recherche */}
@@ -55,12 +54,12 @@ const Navbar: React.FC = () => {
             right: 0,
           }}
       >
-        <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
-        <Link to="/ads" onClick={() => setIsOpen(false)}>Ads</Link>
-        <Link to="/myads" onClick={() => setIsOpen(false)}>My ads</Link>
-        <Link to="/profile" onClick={() => setIsOpen(false)}>Profil</Link>
-        <Link to="/connexion" onClick={() => setIsOpen(false)}>Connexion</Link>
-        <Link to="/inscription" onClick={() => setIsOpen(false)}>Inscription</Link>
+        <a href="/" onClick={() => setIsOpen(false)}>Home</a>
+        <a href="/ads" onClick={() => setIsOpen(false)}>Ads</a>
+        <a href="/myads" onClick={() => setIsOpen(false)}>My ads</a>
+        <a href="/profile" onClick={() => setIsOpen(false)}>Profil</a>
+        <a href="/connexion" onClick={() => setIsOpen(false)}>Connexion</a>
+        <a href="/inscription" onClick={() => setIsOpen(false)}>Inscription</a>
       </div>
     </nav>
   );

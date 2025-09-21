@@ -1,36 +1,30 @@
 {
   "name": "tailwindcss4",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.14",
-    "@types/react-router-dom": "^5.3.3",
-    "lucide-react": "^0.482.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.3.0",
-    "sweetalert2": "^11.17.2",
-    "tailwindcss": "^4.0.14"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@tsconfig/vite-react": "^3.4.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "typescript": "^5.8.2",
-    "vite": "^6.2.0"
+    "@astrojs/mdx": "^4.3.5",
+    "@astrojs/react": "^4.3.1",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "astro": "^5.13.9",
+    "lucide-react": "^0.544.0",
+    "react-dom": "^19.1.1",
+    "react-is": "^19.1.1",
+    "react-router-dom": "^7.9.1",
+    "sharp": "^0.34.3",
+    "styled-components": "^6.1.19",
+    "sweetalert2": "^11.23.0",
+    "tailwindcss": "^3.4.13"
   }
 }

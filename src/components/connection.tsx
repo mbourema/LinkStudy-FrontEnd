@@ -4,10 +4,6 @@ import Swal from "sweetalert2";
 
 
 export default function Connexion() {
-    useEffect(() => {
-      document.title = "Connexion - LinkStudy";
-    }, []);
-
     // État pour stocker les valeurs du formulaire
     const [formData, setFormData] = useState({
       email: "",
@@ -39,7 +35,7 @@ export default function Connexion() {
       e.preventDefault(); // Empêche le rechargement de la page par défaut
       let newErrors: { [key: string]: string } = {};
       try {
-            const response = await fetch("http://localhost:5000/users/login", {
+            const response = await fetch("https://linkstudy-backend-production.up.railway.app/users/login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(formData)
@@ -56,7 +52,7 @@ export default function Connexion() {
               showConfirmButton: false,
               timer: 3000,
             }).then(() => {                   
-              document.location.href = "/";
+              window.location.href = "/home";
             });
       
           } catch (error) {
