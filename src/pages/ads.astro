@@ -2,11 +2,16 @@
 import FilterButtons from "../components/adsfilters";
 import Button from "../components/button";
 import BaseLayout from "../layout/BaseLayout.astro";
+
+const ads = await Astro.glob('../content/ads.md');
+const { title, body } = ads[0].frontmatter;
 ---
 <BaseLayout title="Ads">
   <div class="flex flex-col gap-y-10 lg:items-center">
       <FilterButtons />
       <Button text="Filter" client:load color="bg-yellow-500"/>
   </div>
+  <h1 class="text-2xl font-bold">{title}</h1>
+  <p class="max-w-2xl">{body}</p>
 </BaseLayout>
 
