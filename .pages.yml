@@ -1,0 +1,17 @@
+media: src/assets/media
+
+content:
+  - name: ads
+    label: Ads Page
+    type: file
+    path: src/content/ads.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: body
+        label: Paragraph
+        type: text
+        required: true
